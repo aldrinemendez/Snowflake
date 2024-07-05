@@ -1,1 +1,14 @@
+CREATE OR REPLACE TEMPORARY FUNCTION XML_TO_JSON(XML STRING)
+RETURNS VARIANT
+LANGUAGE PYTHON
+RUNTIME VERSION = 3.8
+PACKAGES = ('xmltodict')
+HANDLER = 'xmltojson'
+COMMENT = 'This UDF will convert XML data to JSON data for simpler flattening'
+AS $$
+import xmltodict as xd
 
+def xmltojson(xml):
+  json = xd.parse(xml)
+  return json
+$$;
